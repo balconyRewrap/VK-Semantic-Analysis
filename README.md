@@ -2,10 +2,18 @@
 
 ## Нейронная сеть для анализа Вконтакте
 
-### ``Dependencies``
+### ``Dependencies for python``
 
 1) Pip
-2) tenserflow
+2) tensorflow
+3) h5py
+4) graphviz
+
+
+### ``Dependencies for training NL``
+1) cuda
+2) cudnn
+3) HDF5
 
 ### ``Цель проекта: ``
 
