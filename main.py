@@ -1,9 +1,4 @@
 from keras.models import Sequential, load_model
-
-import nltk
-
-nltk.download('punkt')
-
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
@@ -11,6 +6,11 @@ from keras.utils import np_utils
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 import pickle
+import scipy.sparse as sp
+import tensorflow as tf
+import nltk
+
+nltk.download('punkt')
 
 
 # Define a function to preprocess the data
@@ -53,7 +53,7 @@ def read_dataset(file_path):
 
 def train_model():
     # Read the dataset
-    data = read_dataset('dataset-orig.txt')
+    data = read_dataset('dataset.txt')
 
     # Preprocess the data
     X, y = preprocess_data(data)
@@ -63,11 +63,19 @@ def train_model():
 
     # Vectorize the text using the bag-of-words model
     vectorizer = CountVectorizer()
-    X = vectorizer.fit_transform([' '.join(tokens) for tokens in tokenized_data]).toarray()
+    X = vectorizer.fit_transform([' '.join(tokens) for tokens in tokenized_data])
+
+    # Convert the sparse matrix to Compressed Sparse Row (CSR) format
+    X = sp.csr_matrix(X)
 
     # Apply TF-IDF transformation to the vectorized data
     transformer = TfidfTransformer()
-    X = transformer.fit_transform(X).toarray()
+    X = transformer.fit_transform(X)
+
+    # Reorder the sparse matrix to avoid out-of-order indices
+    X = X.tocoo()
+    X = tf.SparseTensor(indices=np.vstack((X.row, X.col)).T, values=X.data, dense_shape=X.shape)
+    X = tf.sparse.reorder(X)
 
     # Map labels to integers
     label_map = {'positive': 0, 'negative': 1}
@@ -100,7 +108,7 @@ def train_model():
         pickle.dump(transformer, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
-def test_model():
+def test_model_prev():
     # Load the trained model from file
     model = load_model('text_classifier.h5')
     while True:
@@ -136,9 +144,49 @@ def test_model():
         print('Prediction:', predictions)
 
 
+# Define a function to test the model
+def test_model():
+    # Load the trained model from file
+    model = load_model('text_classifier.h5')
+    # Load the vectorizer and transformer objects from file
+    with open('vectorizer.pickle', 'rb') as handle:
+        vectorizer = pickle.load(handle)
+    with open('transformer.pickle', 'rb') as handle:
+        transformer = pickle.load(handle)
+    while True:
+        # Get user input
+        text = input('Enter some text, q if exit: ')
+        if text == 'q':
+            break
+        # Tokenize the text
+        tokens = tokenize(text)
+
+        # Vectorize and transform the text
+        X = vectorizer.transform([' '.join(tokens)])
+        X = sp.csr_matrix(X)
+        X = transformer.transform(X)
+
+        # Convert X to a dense tensor
+        X = X.toarray()
+
+        # Convert X to a Tensor
+        X = tf.convert_to_tensor(X, dtype=tf.float32, name='X')
+
+        # Make predictions
+        predictions = model.predict(X)
+
+        # Analyze the predictions
+        if predictions[0][0] > predictions[0][1]:
+            print('Predicted sentiment: positive')
+        else:
+            print('Predicted sentiment: negative')
+
+
 # # Train the model and save it to a file
 # train_model()
 
-# # Test the model
-# test_model()
-data = read_dataset('dataset.txt')
+# Test the model
+test_model()
+
+# Check the dataset for errors
+# data = read_dataset('dataset.txt')
