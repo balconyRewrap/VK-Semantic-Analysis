@@ -2,18 +2,29 @@
 
 ## Нейронная сеть для анализа Вконтакте
 
-### ``Dependencies for python``
+### ``Зависимости для Python для обучения нейросети:``
+**Библиотеки:**
+1) keras
+2) numpy
+3) sklearn
+4) pickle
+5) scipy
+6) tensorflow
+7) nltk
+8) h5py
 
-1) Pip
-2) tensorflow
-3) h5py
-4) graphviz
 
+**Команда для установки:**
+```pip install keras numpy scikit-learn pickle scipy tensorflow nltk h5py```
 
-### ``Dependencies for training NL``
+### ``Зависимости для тренировки и использования нейросети вообще:``
+##Если хотите тренировать только на процессоре:##
+1) [HDF5](https://www.hdfgroup.org/downloads/hdf5)
+
+##Если хотите тренировать только на или и на видеокарте:##
 1) cuda
 2) cudnn
-3) HDF5
+
 
 ### ``Цель проекта: ``
 
