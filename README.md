@@ -13,6 +13,9 @@
 7) nltk
 8) h5py
 
+**Команда для установки:**
+```pip install keras numpy scikit-learn pickle scipy tensorflow nltk h5py```
+
 ### ``Используемые Датасеты для обучения нейросети```
 **Используемые по прямому назначению:**
 1) [RuTweetCorp (Rubtsova, 2013)](http://study.mokoron.com/)
@@ -25,8 +28,6 @@
 1) [Словарь матерных слов](https://mat2.slovaronline.com/)
 Сам датасет не предоставляет, пришлось парсить
 2) [Список русских матерных слов для бана](https://github.com/bars38/Russian_ban_words)
-**Команда для установки:**
-```pip install keras numpy scikit-learn pickle scipy tensorflow nltk h5py```
 
 ### ``Зависимости для тренировки и использования нейросети вообще:``
 **Если хотите тренировать только на процессоре:**
