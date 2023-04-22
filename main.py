@@ -50,7 +50,7 @@ def read_dataset(file_path):
 
 
 # Define a function to train the model
-
+from keras.callbacks import EarlyStopping
 def train_model():
     # Read the dataset
     data = read_dataset('dataset.txt')
@@ -93,9 +93,10 @@ def train_model():
 
     # Compile the model
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-
+    # Define early stopping
+    early_stopping = EarlyStopping(monitor='loss', patience=5, mode='min', min_delta=0.003)
     # Train the model
-    model.fit(X, y, epochs=100, batch_size=32, verbose=2)
+    model.fit(X, y, epochs=100, batch_size=32, verbose=2, callbacks=[early_stopping])
 
     # Save the trained model to a file
     model.save('text_classifier.h5')
@@ -183,10 +184,4 @@ def test_model():
 
 
 # # Train the model and save it to a file
-# train_model()
-
-# Test the model
-test_model()
-
-# Check the dataset for errors
-# data = read_dataset('dataset.txt')
+train_model()
