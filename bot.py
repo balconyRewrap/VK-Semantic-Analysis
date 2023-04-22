@@ -44,7 +44,7 @@ def read_dataset(file_path):
 
 
 # создаем объект бота
-bot = telebot.TeleBot('5979403687:AAEiP9XwXrzFB0yL3FNyVEw9dZiCHTBeECg')
+bot = telebot.TeleBot('not yours')
 # Объект клавиатуры
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
