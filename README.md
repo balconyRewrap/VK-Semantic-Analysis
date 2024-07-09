@@ -1,9 +1,9 @@
-# Программа по определению эмоциональной окраски постов и комментариев пользователей в социальной сети ВКонтакте на основе нейронной сети, написанной на языке программирования Python
+# Program for Sentiment Analysis of Posts and Comments on VKontakte Using a Neural Network Written in Python
 
-## Нейронная сеть для анализа Вконтакте
+## Neural Network for VKontakte Analysis
 
-### ``Зависимости для Python для обучения нейросети:``
-**Библиотеки:**
+### ``Python Dependencies for Training the Neural Network:``
+**Libraries:**
 1) keras
 2) numpy
 3) sklearn
@@ -13,135 +13,123 @@
 7) nltk
 8) h5py
 
-**Команда для установки:**
+**Installation Command:**
 ```pip install keras numpy scikit-learn pickle scipy tensorflow nltk h5py```
 
-### ``Используемые Датасеты для обучения нейросети``
-**Используемые по прямому назначению:**
+### ``Datasets Used for Training the Neural Network``
+**Primary Datasets:**
 1) [RuTweetCorp (Rubtsova, 2013)](http://study.mokoron.com/)
-~~ХА-ХА, сайт не хоститься уже года 3, найти сами датасеты можно только чудом в глубинах сети~~
 2) [RuReviews (Smetanin and Komarov, 2019)](https://ieeexplore.ieee.org/document/8807792)
-3) [Russian Language Toxic Comments (2ch.hk и Pikabu.ru)](https://www.kaggle.com/datasets/blackmoon/russian-language-toxic-comments)
-4) [PolSentiLex 2015 и 2016](https://linis-crowd.org/)
+3) [Russian Language Toxic Comments (2ch.hk and Pikabu.ru)](https://www.kaggle.com/datasets/blackmoon/russian-language-toxic-comments)
+4) [PolSentiLex 2015 and 2016](https://linis-crowd.org/)
 
-**Датасеты для аугментации основных:**
-1) [Словарь матерных слов](https://mat2.slovaronline.com/)
-Сам датасет не предоставляет, пришлось парсить
-2) [Список русских матерных слов для бана](https://github.com/bars38/Russian_ban_words)
+**Supplementary Datasets:**
+1) [Dictionary of Obscene Words](https://mat2.slovaronline.com/)
+The dataset isn't provided; had to parse it manually.
+2) [List of Russian Obscene Words for Banning](https://github.com/bars38/Russian_ban_words)
 
-### ``Зависимости для тренировки и использования нейросети вообще:``
-**Если хотите тренировать только на процессоре:**
+### ``Dependencies for Training and Using the Neural Network:``
+**If training on CPU:**
 1) [HDF5](https://www.hdfgroup.org/downloads/hdf5)
 
-**Если хотите тренировать только на или и на видеокарте:**
+**If training on or including GPU:**
 1) cuda
 2) cudnn
 
+### ``Project Goal:``
 
-### ``Цель проекта: ``
+Develop a program that can analyze the sentiment of posts and comments on VKontakte.
 
-Разработать программу, которая может анализировать эмоциональную окраску постов и комментариев во Вконтакте.
-### `` Задачи проекта: ``
+### ``Project Objectives:``
 
-1) Написать алгоритм (***веб-парсер***), позволяющий собирать необходимую информацию из социальной сети Вконтакте (сообщества, страница пользователя, перечень сообществ или групп и так далее);
-2) Создать алгоритм на основе нейронной сети для анализа постов и комментариев.
-3) Создать набор данных в формате, который может использоваться для обучения нейронной сети;
-4) Написать алгоритм, позволяющий структурировать входные данные нужным образом для обработки их нейронной сетью;
-5) Обучить нейронную сеть на основе созданного набора данных для классификации постов и комментариев по эмоциональной окраске (например, на позитивную и негативную);
-6) Написать алгоритм, позволяющий представить результат в подходящей для пользователя форме;
-7) Написать программный интерфейс приложения (***API***) для интеграции программы с другими.
+1) Develop an algorithm (***web scraper***) to collect necessary information from VKontakte (communities, user pages, list of communities or groups, etc.);
+2) Create a neural network-based algorithm to analyze posts and comments.
+3) Create a dataset in a format suitable for neural network training;
+4) Write an algorithm to structure input data appropriately for neural network processing;
+5) Train the neural network on the created dataset to classify posts and comments by sentiment (e.g., positive or negative);
+6) Develop an algorithm to present the results in a user-friendly format;
+7) Develop an application programming interface (***API***) for integrating the program with other software.
 
-### ``Теоретическая справка:``
+### ``Theoretical Background:``
 
-1) **Нейронная сеть** — это алгоритм машинного обучения, который моделирует функционирование человеческого мозга и позволяет компьютеру обучаться на основе большого количества данных.
-Она состоит из большого количества взаимосвязанных элементов, называемых нейронами, которые обрабатывают информацию, передавая ее друг другу через соединения, называемые синапсами. Нейроны сети работают вместе, чтобы решать задачи обработки информации, например, классификацию изображений, распознавание речи, прогнозирование временных рядов и т.д.
-Обучение нейронной сети происходит на основе обратного распространения ошибки, когда сеть анализирует набор обучающих данных и пытается улучшить свою работу, подстраивая параметры своих нейронов для достижения наилучшего результата.
-2) **Веб-парсер** — это программа, которая извлекает данные с веб-страниц и анализирует их для последующей обработки или использования. Веб-парсеры могут быть использованы для сбора информации о товарах, ценах, новостях и других данных из различных источников в интернете.
+1) **Neural Network**: An algorithm for machine learning that models the functioning of the human brain, enabling a computer to learn from large amounts of data. It consists of interconnected elements called neurons, which process information and pass it to each other through connections called synapses. Neurons work together to solve information processing tasks, such as image classification, speech recognition, and time series prediction. Neural network training involves backpropagation, where the network adjusts its neuron parameters based on training data to achieve optimal results.
+2) **Web Scraper**: A program that extracts data from web pages for subsequent processing or use. Web scrapers can gather information on products, prices, news, and other data from various internet sources.
 
-### ``Существующие наработки по схожей теме:``
+### ``Existing Work on Similar Topics:``
 
-1) [Twitter semantic analysis от программиста под никнеймом Cercosa](https://github.com/Cercosa/Twitter_semantic_analysis)
-2) [SemanticAnalysis от программиста под никнеймом kokwai48699](https://github.com/kokwai4869/SemanticAnalysis)
-3) [semanticAnalysis от программиста под никнеймом hudongyue1](https://github.com/hudongyue1/semanticAnalysis)
-4) [SemanticAnalysis от программиста под никнеймом Jared-Hall](https://github.com/Jared-Hall/SemanticAnalysis)
-5) [SAoT от программиста под никнеймом zackotterstrom](https://github.com/zackotterstrom/SAoT)
+1) [Twitter Semantic Analysis by Cercosa](https://github.com/Cercosa/Twitter_semantic_analysis)
+2) [SemanticAnalysis by kokwai48699](https://github.com/kokwai4869/SemanticAnalysis)
+3) [SemanticAnalysis by hudongyue1](https://github.com/hudongyue1/semanticAnalysis)
+4) [SemanticAnalysis by Jared-Hall](https://github.com/Jared-Hall/SemanticAnalysis)
+5) [SAoT by zackotterstrom](https://github.com/zackotterstrom/SAoT)
 
-### ``Преимущества нашего проекта над представленными аналогами:``
+### ``Advantages of Our Project over Existing Solutions:``
 
-1) Создан для работы с ***Русским языком***;
-2) Рассчитан на работу с социальной сетью ***Вконтакте***;
-3) Может сам получать необходимую информацию из источников без необходимости вносить все данные вручную;
-4) Прост в освоении и использовании;
-5) Имеет механизм интеграции (***API***) с другими программными обеспечениями.
+1) Designed specifically for ***Russian language***;
+2) Targeted for use with ***VKontakte*** social network;
+3) Capable of automatically obtaining necessary information from sources without manual data input;
+4) Easy to learn and use;
+5) Includes an integration mechanism (***API***) with other software.
 
-### ``Итоговым результатом нашего проекта является:``
+### ``End Product of Our Project:``
 
-**Программное обеспечение**, с помощью которого пользователи могут получить удобный и быстрый способ анализировать эмоциональную окраску своих постов и комментариев в социальной сети ВКонтакте, например, чтобы определить, как их мнение будет воспринято другими пользователями. Также это может быть полезно для маркетинговых исследований, анализа общественного мнения и других приложений, связанных с анализом текстов в социальных медиа.
+**Software** that provides users with a convenient and quick way to analyze the sentiment of their posts and comments on VKontakte. This can help users understand how their opinions will be perceived by others. It can also be useful for marketing research, public opinion analysis, and other applications related to text analysis in social media.
 
-### ``Возможные проблемы с которыми мы можем столкнуться по ходу проекта: ``
+### ``Potential Issues During the Project:``
 
-1) Необходимость в большом объеме данных для обучения нейронной сети. Чтобы создать точную модель, необходимо обучить нейронную сеть на большом количестве текстов с известной эмоциональной окраской. Если доступных данных будет недостаточно, то это может снизить точность и эффективность модели.
-2) Необходимость в эффективном алгоритме предобработки данных. Прежде чем подавать данные на вход нейронной сети, необходимо их предобработать, чтобы сделать тексты более чистыми и структурированными. Неэффективный алгоритм предобработки может снизить качество модели.
-3) Проблемы с определением эмоциональной окраски. Эмоциональная окраска может быть субъективной и зависеть от контекста, что может затруднить определение ее точной эмоциональной окраски. Это может снизить точность модели.
-### ``Области знаний, которые затрагиваются в проекте:``
+1) Large data requirements for training the neural network. To create an accurate model, the neural network must be trained on a large amount of text with known sentiment. Insufficient data can reduce the model's accuracy and effectiveness.
+2) Effective data preprocessing algorithm. Before feeding data into the neural network, it must be preprocessed to make the texts cleaner and more structured. An ineffective preprocessing algorithm can reduce model quality.
+3) Challenges in determining sentiment. Sentiment can be subjective and context-dependent, making it difficult to accurately determine sentiment, which can reduce model accuracy.
 
-1) **Обработка естественного языка** (***Natural Language Processing, NLP***) для анализа текстовых данных.
-2) Машинное обучение, в частности, **глубокое обучение** (***Deep Learning***), для создания нейронной сети, которая будет определять эмоциональную окраску текстов.
+### ``Knowledge Areas Addressed in the Project:``
+
+1) **Natural Language Processing (NLP)** for text data analysis.
+2) **Machine Learning**, particularly **Deep Learning**, for creating a neural network that will determine text sentiment.
 ---
-### ``Требуемое аппаратное обеспечение для проекта:``
+### ``Hardware Requirements for the Project:``
 1) HP Pavilion 15:
-    1. Процессор — Intel Core I7-8550U 1.80Ghz
-    2. Видеокарта — Nvidia GeForce GTX 1050
+    1. Processor — Intel Core I7-8550U 1.80GHz
+    2. Graphics Card — Nvidia GeForce GTX 1050
 
 2) Asus Vivobook Pro 15:
-    1. Процессор — Intel Core I5-11300H 3.10Ghz
-    2. Видеокарта — Nvidia GeForce GTX 1650
+    1. Processor — Intel Core I5-11300H 3.10GHz
+    2. Graphics Card — Nvidia GeForce GTX 1650
 
-### `` Используемые операционные системы для проекта: ``
+### ``Operating Systems Used for the Project: ``
 [LINUX MINT 21.1](https://www.linuxmint.com/)
 
-### `` Используемый Язык Программирования: ``
+### ``Programming Language Used: ``
 [Python](https://www.python.org/)
-### ``Обоснование выбора Языка Программирования, а именно Python:``
-Python используется в нашем проекте, так как он обладает всеми необходимыми инструментами для работы с естественным языком и глубоким обучением, а также может использоваться для создания веб-приложений и других интерфейсов. Python имеет все необходимые библиотеки, которые подходят для реализации нашего проекта, например, requests и BeautifulSoup4 для веб-парсинга.  
-Также Python имеет простой и понятный синтаксис, что делает его легко читаемым и понятным для всех членов в команды вне зависимости от их уровня.  
-Python также является кросс-платформенным языком, что означает, что приложения, написанные на Python, могут быть запущены на различных операционных системах без изменений в коде, что позволит легко портировать код на другие системы.
+### ``Reason for Choosing Python:``
+Python is used in our project because it has all the necessary tools for working with natural language and deep learning, and can also be used for creating web applications and other interfaces. Python has all the necessary libraries suitable for our project, such as requests and BeautifulSoup4 for web scraping.  
+Python also has a simple and clear syntax, making it easily readable and understandable for all team members, regardless of their level.  
+Python is also a cross-platform language, meaning applications written in Python can run on various operating systems without code changes, making it easy to port the code to other systems.
 
-### ``Используемое программное обеспечение:``
-1) **PyCharm** — это интегрированная среда разработки (***IDE***) для языка программирования Python, разработанная компанией JetBrains. PyCharm обладает широкими возможностями для разработки, включая автодополнение кода, отладку, поддержку различных фреймворков и тестирование.
-2) **Pip** — это инструмент командной строки для управления пакетами в Python. С помощью pip вы можете устанавливать, обновлять и удалять пакеты Python из централизованного репозитория PyPI (Python Package Index). Он также позволяет установить пакеты из других источников, таких как Git или SVN. Pip также обладает возможностью установки зависимостей, что делает его необходимым инструментом для управления пакетами в Python.
+### ``Software Used: ``
+1) **PyCharm** — an integrated development environment (***IDE***) for Python, developed by JetBrains. PyCharm has extensive development features, including code autocompletion, debugging, framework support, and testing.
+2) **Pip** — a command-line tool for managing Python packages. With pip, you can install, update, and remove Python packages from the centralized PyPI (Python Package Index) repository. It also allows you to install packages from other sources, such as Git or SVN. Pip also handles dependency installation, making it essential for managing Python packages.
 
-### ``Предполагаемые библиотеки, используемые для реализации проекта:``
-1) **Requests** — библиотека для работы с HTTP-запросами. Она позволяет получать данные с веб-страниц, отправлять данные на сервер и авторизоваться на сайтах.
-2) **Beautiful Soup 4** — библиотека для парсинга HTML и XML документов. Она позволяет извлекать информацию из HTML-страниц, например, тексты статей, заголовки и ссылки.
-3) **NumPy** — библиотека для работы с многомерными массивами и математическими функциями.
-4) **Pandas** — библиотека для работы с данными, включая чтение и запись данных в различных форматах, манипуляции с данными и агрегирование данных.
-5) **Scikit-learn** — библиотека для машинного обучения, включающая алгоритмы классификации, регрессии, кластеризации, выбора моделей и многие другие.
-6) **TensorFlow** — библиотека для разработки и обучения нейронных сетей.
-7) **Keras** — высокоуровневый API для работы с нейронными сетями, основанный на TensorFlow.
-8) **NLTK (Natural Language Toolkit)** — библиотека для работы с естественным языком, включающая алгоритмы токенизации, стемминга, лемматизации и другие.
-9) **Seaborn** — библиотека для визуализации данных, основанная на Matplotlib, но с более простым и красивым интерфейсом.
-10) **SpaCy** — библиотека для обработки естественного языка на Python. Она используется для выполнения различных задач в области обработки естественного языка, таких как токенизация, лемматизация, извлечение именованных сущностей и анализ зависимостей.
+### ``Libraries Anticipated for Project Implementation: ``
+1) **Requests** — a library for working with HTTP requests. It allows you to get data from web pages, send data to a server, and authenticate on websites.
+2) **Beautiful Soup 4** — a library for parsing HTML and XML documents. It allows you to extract information from HTML pages, such as article texts, titles, and links.
+3) **NumPy** — a library for working with multidimensional arrays and mathematical functions.
+4) **Pandas** — a library for data manipulation, including reading and writing data in various formats, data manipulation, and data aggregation.
+5) **Scikit-learn** — a machine learning library that includes classification, regression, clustering, model selection algorithms, and more.
+6) **TensorFlow** — a library for developing and training neural networks.
+7) **Keras** — a high-level API for working with neural networks, built on TensorFlow.
+8) **NLTK (Natural Language Toolkit)** — a library for natural language processing, including tokenization, stemming, lemmatization algorithms, and more.
+9) **Seaborn** — a data visualization library based on Matplotlib, but with a simpler and more beautiful interface.
+10) **SpaCy** — a library for natural language processing in Python. It is used for tasks like tokenization, lemmatization, named entity recognition, and dependency parsing.
 ---
-### ``Роли в команде:``
-1) **Рогачев Михаил Валерьевич** — Project Manager, инженер по машинному обучение, разработчик Python
-2) **Капленко Артём Алексеевич** —  Аналитик данных, разработчик Python
-3) **Хромов Виктор Владимирович** — Тестировщик
+### ``Team Roles: ``
+1) **Mikhail Rogachev** — Project Manager, Machine Learning Engineer, Python Developer
+2) **Artem Kaplenko** — Data Analyst, Python Developer
+3) **Viktor Khromov** — Tester
 ---
-### ``Roadmap проекта:``
-#### 3-14 Недели:
-- [x] 1) Сбор тестовых данных — 3-4 недели — **Капленко**;  
-- [x] 2) Алгоритм, позволяющий структурировать входные данные нужным образом для обработки их нейронной сетью - 4-5 недели — **Рогачев**;
-- [x] 3) Разработка первой версии нейронной сети — 5-6 недели — **Рогачев**;
-- [x] 4) Сбор и предварительная обработка данных для обучения нейронной сети, включая посты и комментарии пользователей ВКонтакте — 6-8 недели — **Капленко**;
-- [x] 5) Обучение нейронной сети на первоначальных собранных данных — 8-13 недели — **Рогачев/Капленко**;
-- [x] 6) Тестирование нейронной сети — 12-14 недели — **Хромов**.
-#### Второй курс:
-- [ ] 1) Оптимизация нейронной сети;
-- [ ] 2) Сбор и обработка дополнительных данных при необходимости;
-- [ ] 3) Обучение нейронной сети на дополнительных данных;
-- [ ] 4) Разработка первоначального механизма для получения данных из социальной сети Вконтакте;
-- [ ] 5) Тестирование механизма;
-- [ ] 6) Разработка программного обеспечения на Python для использования нейронной сети в реальном времени;
-- [ ] 7) Тестирование и отладка программного обеспечения;
-- [ ] 8) Выпуск программного обеспечения.
+### ``Project Roadmap: ``
+- [x] 1) Collecting test data — 3-4 weeks — **Kaplenko**;  
+- [x] 2) Algorithm for structuring input data for neural network processing — 4-5 weeks — **Rogachev**;
+- [x] 3) Development of the first version of the neural network — 5-6 weeks — **Rogachev**;
+- [x] 4) Collecting and preprocessing data for training the neural network, including posts and comments from VKontakte — 6-8 weeks — **Rogachev**;
+- [x] 5) Training the neural network on the initially collected data — 8-13 weeks — **Rogachev/Kaplenko**;
+- [x] 6) Testing the neural network — 12-14 weeks — **Khromov**.
